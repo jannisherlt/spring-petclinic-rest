@@ -220,4 +220,13 @@ class VetRestControllerTests {
         	.andExpect(status().isNotFound());
     }
 
+    @Test
+    @WithMockUser(roles="VET_ADMIN")
+    void testGetVetByKeywordsNotFound() throws Exception {
+        given(this.clinicService.getVetByKeywords("test")).willReturn(null);
+        this.mockMvc.perform(get("/api/search/vets?keywords=radio")
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
+    }
+
 }

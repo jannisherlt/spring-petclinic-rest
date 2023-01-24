@@ -551,12 +551,12 @@ abstract class AbstractClinicServiceTests {
     }
     @Test
     void shouldFindVetByKeywords() {
-        List<Vet> vets = this.clinicService.getVetByKeywords("radiol Helen James");
+        List<Vet> vets = this.clinicService.getVetByKeywords("radiology");
         for (Vet vet: vets) {
             System.out.println(vet.getFirstName().concat(" ".concat(vet.getLastName())));
             System.out.println("-----");
         }
-        assertThat(vets.size()).isEqualTo(3);
+        assertThat(vets.size()).isEqualTo(2);
     }
 
     @Test

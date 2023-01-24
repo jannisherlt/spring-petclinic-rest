@@ -130,7 +130,7 @@ public class VetRestController implements VetsApi {
         return new ResponseEntity<>(new ArrayList<>(visitMapper.toVisitsDto(visits)), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+    @PreAuthorize("hasRole(@roles.VET_ADMIN)")
     @GetMapping(value = "/search/vets")
     public ResponseEntity<List<VetDto>> getVetsByKeywords(@RequestParam("keywords") String keywords) {
 
