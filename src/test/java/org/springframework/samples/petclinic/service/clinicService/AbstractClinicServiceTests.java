@@ -355,12 +355,26 @@ abstract class AbstractClinicServiceTests {
         List<Visit> visits = this.clinicService.getVisitByKeywords("lol");
         assertThat(visits.size()).isEqualTo(0);
     }
+    @Test
+    void shouldFindVisitDescription(){
+        List<Visit> visits = this.clinicService.getVisitByKeywords("shot");
+        assertThat(visits.size()).isEqualTo(2);
+        for (Visit visit: visits){
+            assertThat(visit.getDescription()).isEqualTo("rabies shot");
+        }
+    }
 
     @Test
     void shouldFindVetById() {
         Vet vet = this.clinicService.findVetById(1);
         assertThat(vet.getFirstName()).isEqualTo("James");
         assertThat(vet.getLastName()).isEqualTo("Carter");
+    }
+    @Test
+    void shouldNotFindVetByVisit(){
+        Visit visit = this.clinicService.findVisitById(1);
+        assertThat(visit.getVet().getFirstName()).isEqualTo("James");
+        assertThat(visit.getVet().getFirstName()).isNotEqualTo("Ida");
     }
 
     @Test
