@@ -99,6 +99,7 @@ public class PetRestController implements PetsApi {
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @GetMapping(value = "/search/pets")
+    @CrossOrigin
     public ResponseEntity<List<PetDto>> getPetsByKeywords(@RequestParam("keywords") String keywords) {
 
         List<Pet> pets = this.clinicService.getPetByKeywords(keywords);

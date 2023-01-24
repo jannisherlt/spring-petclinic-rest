@@ -27,6 +27,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.mapper.PetMapper;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.rest.advice.ExceptionControllerAdvice;
 import org.springframework.samples.petclinic.rest.dto.OwnerDto;
 import org.springframework.samples.petclinic.rest.dto.PetDto;
@@ -48,6 +49,7 @@ import java.util.List;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -216,6 +218,29 @@ class PetRestControllerTests {
         given(this.clinicService.findPetById(999)).willReturn(null);
         this.mockMvc.perform(delete("/api/pets/999")
             .content(newPetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVetByKeywordsFound() throws Exception {
+        String keyword = "Rosy";
+        given(this.clinicService.getPetByKeywords(keyword)).willReturn((List<Pet>) petMapper.toPets(pets));
+        this.mockMvc.perform(get("/api/search/pets")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetPetByKeywordsNotFound() throws Exception {
+        String keyword = "test";
+        List<Pet> emptyPets = new ArrayList<>();
+        given(this.clinicService.getPetByKeywords(keyword)).willReturn(emptyPets);
+        this.mockMvc.perform(get("/api/search/pets")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
             .andExpect(status().isNotFound());
     }
 

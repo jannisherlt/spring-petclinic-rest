@@ -165,6 +165,7 @@ public class OwnerRestController implements OwnersApi {
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @GetMapping(value = "/search/owners")
+    @CrossOrigin
     public ResponseEntity<List<OwnerDto>> getOwnersByKeywords(@RequestParam("keywords") String keywords) {
 
         List<Owner> owners = this.clinicService.getOwnerByKeywords(keywords);

@@ -109,6 +109,7 @@ public class VisitRestController implements VisitsApi {
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
     @GetMapping(value = "/search/visits")
+    @CrossOrigin
     public ResponseEntity<List<VisitDto>> getVisitsByKeywords(@RequestParam("keywords") String keywords) {
 
         List<Visit> visits = this.clinicService.getVisitByKeywords(keywords);

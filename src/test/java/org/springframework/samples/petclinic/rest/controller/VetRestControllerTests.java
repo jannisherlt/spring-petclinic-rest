@@ -25,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.mapper.VetMapper;
 import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.rest.advice.ExceptionControllerAdvice;
 import org.springframework.samples.petclinic.rest.controller.VetRestController;
 import org.springframework.samples.petclinic.service.ClinicService;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -221,11 +223,46 @@ class VetRestControllerTests {
     }
 
     @Test
-    @WithMockUser(roles="VET_ADMIN")
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVetByKeywordsFound() throws Exception {
+        String keyword = "james";
+        given(this.clinicService.getVetByKeywords(keyword)).willReturn(vets);
+        this.mockMvc.perform(get("/api/search/vets")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
     void testGetVetByKeywordsNotFound() throws Exception {
-        given(this.clinicService.getVetByKeywords("test")).willReturn(null);
-        this.mockMvc.perform(get("/api/search/vets?keywords=radio")
-                .accept(MediaType.APPLICATION_JSON))
+        String keyword = "test";
+        List<Vet> emptyVets = new ArrayList<>();
+        given(this.clinicService.getVetByKeywords(keyword)).willReturn(emptyVets);
+        this.mockMvc.perform(get("/api/search/visits")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVisitsByVetIdSuccess() throws Exception {
+        vets.get(0).addVisit(new Visit());
+        given(this.clinicService.findByVetId(1)).willReturn(vets.get(0).getVisits());
+        this.mockMvc.perform(get("/api/visits/vet/1")
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVisitsByVetIdNotFound() throws Exception {
+
+        given(this.clinicService.findByVetId(1)).willReturn(new ArrayList<Visit>());
+        this.mockMvc.perform(get("/api/visits/vet/1")
+                .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isNotFound());
     }
 

@@ -21,9 +21,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.samples.petclinic.mapper.VisitMapper;
 import org.springframework.samples.petclinic.model.*;
@@ -42,6 +44,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -52,6 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ContextConfiguration(classes=ApplicationTestConfig.class)
 @WebAppConfiguration
+@Import(VisitRestController.class)
 class VisitRestControllerTests {
 
     @Autowired
@@ -246,6 +250,29 @@ class VisitRestControllerTests {
         given(this.clinicService.findVisitById(999)).willReturn(null);
         this.mockMvc.perform(delete("/api/visits/999")
                 .content(newVisitAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVisitByKeywordsFound() throws Exception {
+        String keyword = "rabies";
+        given(this.clinicService.getVisitByKeywords(keyword)).willReturn(visits);
+        this.mockMvc.perform(get("/api/search/visits")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetVisitByKeywordsNotFound() throws Exception {
+        String keyword = "test";
+        List<Visit> emptyVisits = new ArrayList<>();
+        given(this.clinicService.getVisitByKeywords(keyword)).willReturn(emptyVisits);
+        this.mockMvc.perform(get("/api/search/visits")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
             .andExpect(status().isNotFound());
     }
 }
