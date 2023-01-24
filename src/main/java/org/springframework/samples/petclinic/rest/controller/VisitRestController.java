@@ -107,4 +107,17 @@ public class VisitRestController implements VisitsApi {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+    @GetMapping(value = "/search/visits")
+    @CrossOrigin
+    public ResponseEntity<List<VisitDto>> getVisitsByKeywords(@RequestParam("keywords") String keywords) {
+
+        List<Visit> visits = this.clinicService.getVisitByKeywords(keywords);
+        System.out.println(visits.size());
+        if (visits.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new ArrayList<>(visitMapper.toVisitsDto(visits)), HttpStatus.OK);
+    }
+
 }

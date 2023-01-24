@@ -19,6 +19,7 @@ package org.springframework.samples.petclinic.repository.springdatajpa;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.search.engine.search.common.BooleanOperator;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.context.annotation.Profile;
@@ -49,7 +50,9 @@ public class SpringDataVisitRepositoryImpl implements VisitRepositoryOverride {
     @Override
     public List<Visit> getVisitByKeywords(String keywords) {
         SearchSession searchSession = Search.session(em);
-        return searchSession.search(Visit.class).where(f -> f.simpleQueryString().fields("description").matching(keywords)).fetchAllHits();
+        return searchSession.search(Visit.class).where(f -> f.simpleQueryString()
+            .fields("description")
+            .matching(keywords).defaultOperator(BooleanOperator.AND)).fetchAllHits();
     }
 
 
