@@ -288,6 +288,22 @@ abstract class AbstractClinicServiceTests {
     }
 
     @Test
+    void shouldFindVisitOwner()
+    {
+        Collection<Visit> visits = this.clinicService.getVisitByKeywords("spay");
+        assertThat(visits.size()).isEqualTo(1);
+        assertThat(visits.iterator().next().getPet().getOwner().getFirstName()).isEqualTo("Jean");
+    }
+
+    @Test
+    void shouldNotFindVisitOwner()
+    {
+        Collection<Visit> visits = this.clinicService.getVisitByKeywords("Sophie");
+        assertThat(visits.size()).isEqualTo(0);
+    }
+
+
+    @Test
     @Transactional
     void shouldInsertVisit() {
         Collection<Visit> visits = this.clinicService.findAllVisits();
@@ -333,10 +349,19 @@ abstract class AbstractClinicServiceTests {
         }
         assertThat(visit).isNull();
     }
+
     @Test
     void shouldNotFindVisitDescription(){
         List<Visit> visits = this.clinicService.getVisitByKeywords("lol");
         assertThat(visits.size()).isEqualTo(0);
+    }
+    @Test
+    void shouldFindVisitDescription(){
+        List<Visit> visits = this.clinicService.getVisitByKeywords("shot");
+        assertThat(visits.size()).isEqualTo(2);
+        for (Visit visit: visits){
+            assertThat(visit.getDescription()).isEqualTo("rabies shot");
+        }
     }
 
     @Test
@@ -344,6 +369,12 @@ abstract class AbstractClinicServiceTests {
         Vet vet = this.clinicService.findVetById(1);
         assertThat(vet.getFirstName()).isEqualTo("James");
         assertThat(vet.getLastName()).isEqualTo("Carter");
+    }
+    @Test
+    void shouldNotFindVetByVisit(){
+        Visit visit = this.clinicService.findVisitById(1);
+        assertThat(visit.getVet().getFirstName()).isEqualTo("James");
+        assertThat(visit.getVet().getFirstName()).isNotEqualTo("Ida");
     }
 
     @Test
