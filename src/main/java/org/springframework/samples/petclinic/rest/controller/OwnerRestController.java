@@ -30,12 +30,11 @@ import org.springframework.samples.petclinic.rest.api.OwnersApi;
 import org.springframework.samples.petclinic.rest.dto.*;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -164,4 +163,15 @@ public class OwnerRestController implements OwnersApi {
         return new ResponseEntity<>(visitDto, headers, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+    @GetMapping(value = "/search/owners")
+    public ResponseEntity<List<OwnerDto>> getOwnersByKeywords(@RequestParam("keywords") String keywords) {
+
+        List<Owner> owners = this.clinicService.getOwnerByKeywords(keywords);
+        System.out.println(owners.size());
+        if (owners.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new ArrayList<>(ownerMapper.toOwnerDtoCollection(owners)), HttpStatus.OK);
+    }
 }

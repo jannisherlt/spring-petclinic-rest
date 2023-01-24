@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.hibernate.search.engine.search.common.BooleanOperator;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.context.annotation.Profile;
@@ -26,10 +27,15 @@ public class SpringDataVetRepositoryImpl implements VetRepositoryOverride {
         List<Vet> vets;
         vets = new ArrayList<>(searchSession.search( Vet.class )
             .where( f -> f.nested().objectField( "specialties" ).nest( f.bool()
-                .must( f.simpleQueryString().field( "specialties.name" ).matching( keyword ))))
+                .must( f.simpleQueryString().field( "specialties.name" )
+                    .matching( keyword )
+                    .defaultOperator(BooleanOperator.AND))))
             .fetchHits( 20 ));
         vets.addAll(searchSession.search(Vet.class)
-            .where(f -> f.simpleQueryString().fields("lastName", "firstName").matching(keyword))
+            .where(f -> f.simpleQueryString().fields("lastName", "firstName")
+                .matching(keyword)
+                .defaultOperator(BooleanOperator.AND)
+            )
             .fetchAllHits());
 
         return vets.stream().distinct().collect(Collectors.toList());

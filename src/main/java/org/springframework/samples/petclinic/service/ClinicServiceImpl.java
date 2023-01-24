@@ -79,7 +79,7 @@ public class ClinicServiceImpl implements ClinicService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(noRollbackFor = RuntimeException.class)
 	public void deletePet(Pet pet) throws DataAccessException {
 		petRepository.delete(pet);
 	}
@@ -164,7 +164,7 @@ public class ClinicServiceImpl implements ClinicService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(noRollbackFor = RuntimeException.class)
 	public void deleteOwner(Owner owner) throws DataAccessException {
 		ownerRepository.delete(owner);
 	}

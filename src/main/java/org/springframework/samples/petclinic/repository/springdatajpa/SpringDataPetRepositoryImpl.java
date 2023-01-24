@@ -19,6 +19,7 @@ package org.springframework.samples.petclinic.repository.springdatajpa;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.hibernate.search.engine.search.common.BooleanOperator;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.context.annotation.Profile;
@@ -53,7 +54,9 @@ public class SpringDataPetRepositoryImpl implements PetRepositoryOverride {
     public List<Pet> getPetByKeywords(String keyword) {
         SearchSession searchSession = Search.session(em);
         return searchSession.search(Pet.class)
-            .where(f -> f.simpleQueryString().fields("name").matching(keyword))
+            .where(f -> f.simpleQueryString()
+                .fields("name").matching(keyword)
+                .defaultOperator(BooleanOperator.AND))
             .fetchAllHits();
     }
 

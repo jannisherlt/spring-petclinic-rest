@@ -55,7 +55,7 @@ public class Owner extends Person {
     @FullTextField(analyzer = "autocomplete_indexing", searchAnalyzer = "autocomplete_search")
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Pet> pets;
 
 
