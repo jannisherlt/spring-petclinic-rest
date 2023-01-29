@@ -1,9 +1,6 @@
-name: ci
+name: Master Branch workflow
 
 on:
-  push:
-    branches:
-      - "master"
   pull_request:
     branches:
       - "master"
