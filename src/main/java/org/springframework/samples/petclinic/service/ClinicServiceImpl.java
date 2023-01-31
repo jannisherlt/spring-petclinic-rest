@@ -48,12 +48,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ClinicServiceImpl implements ClinicService {
 
-    private PetRepository petRepository;
-    private VetRepository vetRepository;
-    private OwnerRepository ownerRepository;
-    private VisitRepository visitRepository;
-    private SpecialtyRepository specialtyRepository;
-	private PetTypeRepository petTypeRepository;
+    private final PetRepository petRepository;
+    private final VetRepository vetRepository;
+    private final OwnerRepository ownerRepository;
+    private final VisitRepository visitRepository;
+    private final SpecialtyRepository specialtyRepository;
+	private final PetTypeRepository petTypeRepository;
 
 
     @Autowired
@@ -79,7 +79,7 @@ public class ClinicServiceImpl implements ClinicService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(noRollbackFor = RuntimeException.class)
 	public void deletePet(Pet pet) throws DataAccessException {
 		petRepository.delete(pet);
 	}
@@ -109,7 +109,18 @@ public class ClinicServiceImpl implements ClinicService {
 		visitRepository.delete(visit);
 	}
 
-	@Override
+    @Override
+    @Transactional
+    public List<Visit> getVisitByKeywords(String keyword) throws DataAccessException {
+        return visitRepository.getVisitByKeywords(keyword);
+    }
+
+    @Override
+    public Collection<Visit> findByVetId(int vetId) throws DataAccessException {
+        return visitRepository.findByVetId(vetId);
+    }
+
+    @Override
 	@Transactional(readOnly = true)
 	public Vet findVetById(int id) throws DataAccessException {
 		Vet vet = null;
@@ -140,14 +151,20 @@ public class ClinicServiceImpl implements ClinicService {
 		vetRepository.delete(vet);
 	}
 
-	@Override
+    @Override
+    @Transactional
+    public List<Vet> getVetByKeywords(String keyword) throws DataAccessException {
+        return vetRepository.getVetByKeywords(keyword);
+    }
+
+    @Override
 	@Transactional(readOnly = true)
 	public Collection<Owner> findAllOwners() throws DataAccessException {
 		return ownerRepository.findAll();
 	}
 
 	@Override
-	@Transactional
+	@Transactional(noRollbackFor = RuntimeException.class)
 	public void deleteOwner(Owner owner) throws DataAccessException {
 		ownerRepository.delete(owner);
 	}
@@ -216,8 +233,14 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     @Transactional
-    public List<Owner> getByKeywords(String lastName) throws DataAccessException {
-        return ownerRepository.getByKeywords(lastName);
+    public List<Owner> getOwnerByKeywords(String lastName) throws DataAccessException {
+        return ownerRepository.getOwnerByKeywords(lastName);
+    }
+
+    @Override
+    @Transactional
+    public List<Pet> getPetByKeywords(String lastName) throws DataAccessException {
+        return petRepository.getPetByKeywords(lastName);
     }
 
     @Override

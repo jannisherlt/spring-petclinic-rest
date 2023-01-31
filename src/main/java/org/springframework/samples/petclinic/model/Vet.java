@@ -16,6 +16,11 @@
 package org.springframework.samples.petclinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
+import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 
@@ -32,13 +37,19 @@ import java.util.*;
  * @author Arjen Poutsma
  */
 @Entity
+@Indexed
 @Table(name = "vets")
 public class Vet extends Person {
 
+    @IndexedEmbedded(structure = ObjectStructure.NESTED)
+    @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
         inverseJoinColumns = @JoinColumn(name = "specialty_id"))
     private Set<Specialty> specialties;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "vet", fetch = FetchType.EAGER)
+    private Set<Visit> visits;
 
     @JsonIgnore
     protected Set<Specialty> getSpecialtiesInternal() {
@@ -74,6 +85,32 @@ public class Vet extends Person {
 
     public void clearSpecialties() {
         getSpecialtiesInternal().clear();
+    }
+
+    protected Set<Visit> getVisitsInternal() {
+        if (this.visits == null) {
+            this.visits = new HashSet<>();
+        }
+        return this.visits;
+    }
+
+    protected void setVisitsInternal(Set<Visit> visits) {
+        this.visits = visits;
+    }
+
+    public List<Visit> getVisits() {
+        List<Visit> sortedVisits = new ArrayList<>(getVisitsInternal());
+        PropertyComparator.sort(sortedVisits, new MutableSortDefinition("date", false, false));
+        return Collections.unmodifiableList(sortedVisits);
+    }
+
+    public void setVisits(List<Visit> visits) {
+        this.visits = new HashSet<>(visits);
+    }
+
+    public void addVisit(Visit visit) {
+        getVisitsInternal().add(visit);
+        visit.setVet(this);
     }
 
 }

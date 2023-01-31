@@ -21,7 +21,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -49,6 +52,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -373,7 +377,7 @@ class OwnerRestControllerTests {
         String newPetAsJSON = mapper.writeValueAsString(newPet);
         this.mockMvc.perform(post("/api/owners/1/pets/")
                 .content(newPetAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isBadRequest()).andDo(MockMvcResultHandlers.print());
+            .andExpect(status().isBadRequest()).andDo(print());
     }
 
     @Test
@@ -381,14 +385,39 @@ class OwnerRestControllerTests {
     void testCreateVisitSuccess() throws Exception {
         VisitDto newVisit = visits.get(0);
         newVisit.setId(999);
+        int vetId = 0;
+        newVisit.setVetId(vetId);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String newVisitAsJSON = mapper.writeValueAsString(visitMapper.toVisit(newVisit));
         System.out.println("newVisitAsJSON " + newVisitAsJSON);
-        this.mockMvc.perform(post("/api/owners/1/pets/1/visits")
+        this.mockMvc.perform(post("/api/owners/1/pets/1/visits/"+vetId)
                 .content(newVisitAsJSON).accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetOwnerByKeywordsFound() throws Exception {
+        String keyword = "davis";
+        given(this.clinicService.getOwnerByKeywords("davis")).willReturn((List<Owner>) ownerMapper.toOwners(owners));
+        this.mockMvc.perform(get("/api/search/owners")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(roles="OWNER_ADMIN")
+    void testGetOwnerByKeywordsNotFound() throws Exception {
+        String keyword = "test";
+        List<Owner> emptyOwners = new ArrayList<>();
+        given(this.clinicService.getOwnerByKeywords("test")).willReturn(emptyOwners);
+        this.mockMvc.perform(get("/api/search/owners")
+                .param("keywords", keyword)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print())
+            .andExpect(status().isNotFound());
     }
 
 }

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.hibernate.search.engine.search.common.BooleanOperator;
+import org.hibernate.search.engine.search.predicate.dsl.SimpleQueryFlag;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.springframework.context.annotation.Profile;
@@ -16,13 +18,13 @@ public class SpringDataOwnerRepositoryImpl implements OwnerRepositoryOverride {
     private EntityManager entityManager;
 
     @Override
-    public List<Owner> getByKeywords(String keyword) {
-        if (keyword.isEmpty()) {
-            return Collections.emptyList();
-        }
+    public List<Owner> getOwnerByKeywords(String keyword) {
         SearchSession searchSession = Search.session(entityManager);
         return searchSession.search(Owner.class)
-            .where(f -> f.simpleQueryString().fields("lastName", "firstName", "address", "city", "telephone").matching(keyword))
+            .where(f -> f.simpleQueryString()
+                .fields("lastName", "firstName", "address", "city", "telephone")
+                .matching(keyword)
+                .defaultOperator(BooleanOperator.AND))
             .fetchAllHits();
     }
 }

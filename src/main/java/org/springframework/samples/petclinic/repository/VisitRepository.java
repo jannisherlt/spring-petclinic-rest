@@ -22,9 +22,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Visit;
 
+
 /**
  * Repository class for <code>Visit</code> domain objects All method names are compliant with Spring Data naming
- * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
+ * conventions so this interface can easily be extended for Spring Data See here: <a href="http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation">...</a>
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
@@ -43,11 +44,14 @@ public interface VisitRepository {
     void save(Visit visit) throws DataAccessException;
 
     List<Visit> findByPetId(Integer petId);
-    
+
 	Visit findById(int id) throws DataAccessException;
-	
+
 	Collection<Visit> findAll() throws DataAccessException;
 
 	void delete(Visit visit) throws DataAccessException;
 
+    List<Visit> getVisitByKeywords(String keywords);
+
+    Collection<Visit> findByVetId(int vetId) throws DataAccessException;
 }

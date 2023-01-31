@@ -20,8 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.samples.petclinic.mapper.PetMapper;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.rest.api.PetsApi;
 import org.springframework.samples.petclinic.rest.dto.PetDto;
+import org.springframework.samples.petclinic.rest.dto.VisitDto;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -95,5 +97,17 @@ public class PetRestController implements PetsApi {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
+    @GetMapping(value = "/search/pets")
+    @CrossOrigin
+    public ResponseEntity<List<PetDto>> getPetsByKeywords(@RequestParam("keywords") String keywords) {
+
+        List<Pet> pets = this.clinicService.getPetByKeywords(keywords);
+        System.out.println(pets.size());
+        if (pets.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new ArrayList<>(petMapper.toPetsDto(pets)), HttpStatus.OK);
+    }
 
 }
