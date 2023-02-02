@@ -97,6 +97,15 @@ INSERT INTO pets VALUES (18, 'Cleo', '2012-04-29', 4, 11);
 INSERT INTO pets VALUES (19, 'Mauzi', '2012-04-29', 6, 11);
 INSERT INTO pets VALUES (20, 'Jeff', '2012-04-29', 8, 4);
 INSERT INTO pets VALUES (21, 'Nessi', '2012-04-29', 4, 11);
+INSERT INTO pets VALUES (22, 'Jelena', '2012-04-29', 1, 8);
+INSERT INTO pets VALUES (23, 'Jessa', '2012-04-29', 4, 5);
+INSERT INTO pets VALUES (24, 'Jeggis', '2012-04-29', 10, 6);
+INSERT INTO pets VALUES (25, 'Jesper', '2012-04-29', 6, 2);
+INSERT INTO pets VALUES (26, 'Jeggis', '2012-04-29', 10, 6);
+INSERT INTO pets VALUES (27, 'Jello', '2012-04-29', 4, 3);
+INSERT INTO pets VALUES (28, 'Jelli', '2012-04-29', 8, 9);
+INSERT INTO pets VALUES (29, 'Jenna', '2012-04-29', 10, 7);
+INSERT INTO pets VALUES (30, 'Jeki', '2012-04-29', 4, 11);
 
 INSERT INTO visits VALUES (1, 13,6, '2023-03-04', 'Ear Infection');
 INSERT INTO visits VALUES (2, 12,5, '2023-03-15', 'Dental Cleaning');
