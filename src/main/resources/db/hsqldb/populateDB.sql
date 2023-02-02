@@ -56,15 +56,25 @@ INSERT INTO types VALUES (11, 'sheep');
 
 INSERT INTO owners VALUES (1, 'Reiner', 'Wolf', '3519 Privet Drive', 'Green Bay', '6060385123');
 INSERT INTO owners VALUES (2, 'Nancy', 'Wheeler', '641 Oak Street', 'Cologne', '6042978461');
-INSERT INTO owners VALUES (3, 'Tom', 'Gibb', '2223 Hopewell Way', 'Surrey', '9856730922');
+INSERT INTO owners VALUES (3, 'Tom', 'Gibb', '2223 Wash Way', 'Surrey', '9856730922');
 INSERT INTO owners VALUES (4, 'Luke', 'Wilson', '19353 West 16th Ave.', 'Oakville', '6088954321');
 INSERT INTO owners VALUES (5, 'Peter', 'McTavish', '1100 Suite, 550 11th Ave.', 'London', '6078933348');
-INSERT INTO owners VALUES (6, 'Jessica', 'Monroe', '119 Pegasus Way', 'Nebraska', '1122998472');
+INSERT INTO owners VALUES (6, 'Jessica', 'Monroe', '119 Pegasus Way', 'Nebraska', '6022998472');
 INSERT INTO owners VALUES (7, 'Henry', 'Hess', '3475 Mainway', 'Omaha', '8965700922');
-INSERT INTO owners VALUES (8, 'Kim', 'Adeniran', '440 Main Street', 'Langley', '6667889215');
+INSERT INTO owners VALUES (8, 'Kim', 'Adeniran', '600 Main Street', 'Langley', '6667889215');
 INSERT INTO owners VALUES (9, 'Mandy', 'Minau',  '3475 Mainway', 'New Brunswick', '98534907');
 INSERT INTO owners VALUES (10, 'Jane', 'Smith', '4314 Highland Road East', 'Roseville', '60598264358');
 INSERT INTO owners VALUES (11, 'Jenny', 'Freeman', '441 East Valley', 'Washington DC', '0983875699');
+INSERT INTO owners VALUES (12, 'Bruce', 'Lee', '456 Apple Street', 'Washington DC', '60841555445');
+INSERT INTO owners VALUES (13, 'Jonathan', 'Meyer', '15 East Valley', 'Washington DC', '0983875699');
+INSERT INTO owners VALUES (14, 'Meik', 'Gilbert', '12 Mulberry Street', 'Washington DC', '6015454699');
+INSERT INTO owners VALUES (15, 'Jonas', 'Lange', '15 Rose Valley', 'Washington DC', '6083875699');
+INSERT INTO owners VALUES (16, 'Kim', 'Possible', '333 Devil Street', 'Washington DC', '0983875699');
+INSERT INTO owners VALUES (17, 'Vanessa', 'Donovan', '945 Blue Valley', 'Washington DC', '6084325765');
+INSERT INTO owners VALUES (18, 'Alex', 'Bolt', '786 Johnsons Street', 'Washington DC', '0983875699');
+INSERT INTO owners VALUES (19, 'Gabi', 'Lotto', '956 Garden Street', 'Washington DC', '6083875699');
+INSERT INTO owners VALUES (20, 'Lasley', 'Fisherman', '888 Pork Valley', 'Washington DC', '6078412121');
+INSERT INTO owners VALUES (21, 'Agata', 'Jones', '569 Runaway Street', 'Washington DC', '0983875699');
 
 INSERT INTO pets VALUES (1, 'Lenny', '2011-10-06', 1, 11);
 INSERT INTO pets VALUES (2, 'Benny', '2013-09-07', 2, 10);
@@ -79,6 +89,14 @@ INSERT INTO pets VALUES (10, 'Pelle', '2021-06-07', 10, 2);
 INSERT INTO pets VALUES (11, 'Sock', '2012-04-29', 1, 11);
 INSERT INTO pets VALUES (12, 'Neri', '2022-09-13', 7, 4);
 INSERT INTO pets VALUES (13, 'Reeve', '2018-02-06', 2, 5);
+INSERT INTO pets VALUES (14, 'Leo', '2012-04-29', 9, 11);
+INSERT INTO pets VALUES (15, 'Jessy', '2012-04-29', 5, 1);
+INSERT INTO pets VALUES (16, 'Alex', '2012-04-29', 2, 11);
+INSERT INTO pets VALUES (17, 'Bello', '2012-04-29', 10, 11);
+INSERT INTO pets VALUES (18, 'Cleo', '2012-04-29', 4, 11);
+INSERT INTO pets VALUES (19, 'Mauzi', '2012-04-29', 6, 11);
+INSERT INTO pets VALUES (20, 'Jeff', '2012-04-29', 8, 4);
+INSERT INTO pets VALUES (21, 'Nessi', '2012-04-29', 4, 11);
 
 INSERT INTO visits VALUES (1, 13,6, '2023-03-04', 'Ear Infection');
 INSERT INTO visits VALUES (2, 12,5, '2023-03-15', 'Dental Cleaning');
@@ -103,8 +121,16 @@ INSERT INTO visits VALUES (20, 2, 3,'2020-01-16', 'Castration');
 INSERT INTO visits VALUES (21, 8,4, '2022-02-04', 'Dental Cleaning');
 INSERT INTO visits VALUES (22, 7,5, '2019-12-06', 'Vomiting');
 INSERT INTO visits VALUES (23, 11,2, '2017-07-21', 'Diet Plan');
-INSERT INTO visits VALUES (24, 5,3, '2022-04-29', 'Castration');
-
+INSERT INTO visits VALUES (24, 1,4, '2021-05-26', 'Castration');
+INSERT INTO visits VALUES (25, 2,3, '2023-04-29', 'Castration');
+INSERT INTO visits VALUES (26, 3,5, '2020-10-01', 'Castration');
+INSERT INTO visits VALUES (27, 4,8, '2019-12-31', 'Castration');
+INSERT INTO visits VALUES (28, 6,10, '2023-03-08', 'Castration');
+INSERT INTO visits VALUES (29, 7,12, '2018-06-14', 'Castration');
+INSERT INTO visits VALUES (30, 8,11, '2023-09-20', 'Castration');
+INSERT INTO visits VALUES (31, 10,15, '2023-02-12', 'Castration');
+INSERT INTO visits VALUES (32, 11,14, '2023-09-16', 'Castration');
+INSERT INTO visits VALUES (33, 12,17, '2022-11-19', 'Castration');
 
 INSERT INTO users(username,password,enabled) VALUES ('admin','{noop}admin', true);
 
