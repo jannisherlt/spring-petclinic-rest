@@ -4,16 +4,43 @@ INSERT INTO vets VALUES (3, 'Josephina', 'Ochynski');
 INSERT INTO vets VALUES (4, 'Wednesday', 'Addams');
 INSERT INTO vets VALUES (5, 'Steve', 'Harrington');
 INSERT INTO vets VALUES (6, 'Carl', 'Meyer');
+INSERT INTO vets VALUES (7, 'Dustin', 'Bieber');
+INSERT INTO vets VALUES (8, 'Dustin', 'Timberlake');
+INSERT INTO vets VALUES (9, 'Dora', 'Nero');
+INSERT INTO vets VALUES (10, 'Donna', 'Paulsen');
+INSERT INTO vets VALUES (11, 'Darius', 'Donner');
+INSERT INTO vets VALUES (12, 'Daniel', 'Fuchs');
+INSERT INTO vets VALUES (13, 'Dirk', 'Winkel');
+INSERT INTO vets VALUES (14, 'Damon', 'Dracula');
+INSERT INTO vets VALUES (15, 'Dorian', 'Gray');
+INSERT INTO vets VALUES (16, 'Devlin', 'Grayson');
+INSERT INTO vets VALUES (17, 'Daria', 'Alfred');
+INSERT INTO vets VALUES (18, 'Dunkin', 'Donouts');
+
 
 INSERT INTO specialties VALUES (1, 'drugs');
 INSERT INTO specialties VALUES (2, 'histology');
 INSERT INTO specialties VALUES (3, 'physiology');
+
 
 INSERT INTO vet_specialties VALUES (1, 3);
 INSERT INTO vet_specialties VALUES (2, 2);
 INSERT INTO vet_specialties VALUES (3, 1);
 INSERT INTO vet_specialties VALUES (4, 3);
 INSERT INTO vet_specialties VALUES (5, 2);
+INSERT INTO vet_specialties VALUES (6, 3);
+INSERT INTO vet_specialties VALUES (7, 3);
+INSERT INTO vet_specialties VALUES (8, 3);
+INSERT INTO vet_specialties VALUES (9, 3);
+INSERT INTO vet_specialties VALUES (10, 3);
+INSERT INTO vet_specialties VALUES (11, 3);
+INSERT INTO vet_specialties VALUES (12, 3);
+INSERT INTO vet_specialties VALUES (13, 3);
+INSERT INTO vet_specialties VALUES (14, 3);
+INSERT INTO vet_specialties VALUES (15, 3);
+INSERT INTO vet_specialties VALUES (16, 3);
+INSERT INTO vet_specialties VALUES (17, 3);
+INSERT INTO vet_specialties VALUES (18, 3);
 
 INSERT INTO types VALUES (1, 'elephant');
 INSERT INTO types VALUES (2, 'giraffe');
