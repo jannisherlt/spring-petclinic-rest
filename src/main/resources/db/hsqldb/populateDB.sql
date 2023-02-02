@@ -132,14 +132,14 @@ INSERT INTO visits VALUES (22, 7,5, '2019-12-06', 'Vomiting');
 INSERT INTO visits VALUES (23, 11,2, '2017-07-21', 'Diet Plan');
 INSERT INTO visits VALUES (24, 1,4, '2021-05-26', 'Castration');
 INSERT INTO visits VALUES (25, 2,3, '2023-04-29', 'Castration');
-INSERT INTO visits VALUES (26, 3,5, '2020-10-01', 'Castration');
+INSERT INTO visits VALUES (26, 3,4, '2020-10-01', 'Castration');
 INSERT INTO visits VALUES (27, 4,8, '2019-12-31', 'Castration');
 INSERT INTO visits VALUES (28, 6,10, '2023-03-08', 'Castration');
-INSERT INTO visits VALUES (29, 7,12, '2018-06-14', 'Castration');
+INSERT INTO visits VALUES (29, 7,4, '2018-06-14', 'Castration');
 INSERT INTO visits VALUES (30, 8,11, '2023-09-20', 'Castration');
 INSERT INTO visits VALUES (31, 10,15, '2023-02-12', 'Castration');
 INSERT INTO visits VALUES (32, 11,14, '2023-09-16', 'Castration');
-INSERT INTO visits VALUES (33, 12,17, '2022-11-19', 'Castration');
+INSERT INTO visits VALUES (33, 12,4, '2022-11-19', 'Castration');
 
 INSERT INTO users(username,password,enabled) VALUES ('admin','{noop}admin', true);
 
