@@ -405,7 +405,7 @@ class OwnerRestControllerTests {
         this.mockMvc.perform(get("/api/search/owners")
                 .param("keywords", keyword)
                 .accept(MediaType.APPLICATION_JSON)).andDo(print())
-            .andExpect(status().isNotFound());
+            .andExpect(status().isOk());
     }
 
     @Test
