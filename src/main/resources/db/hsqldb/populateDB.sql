@@ -106,6 +106,7 @@ INSERT INTO pets VALUES (27, 'Jello', '2012-04-29', 4, 3);
 INSERT INTO pets VALUES (28, 'Jelli', '2012-04-29', 8, 9);
 INSERT INTO pets VALUES (29, 'Jenna', '2012-04-29', 10, 7);
 INSERT INTO pets VALUES (30, 'Jeki', '2012-04-29', 4, 11);
+INSERT INTO pets VALUES (31, 'Jendrik', '2012-04-30', 8, 9);
 
 INSERT INTO visits VALUES (1, 13,6, '2023-03-04', 'Ear Infection');
 INSERT INTO visits VALUES (2, 12,5, '2023-03-15', 'Dental Cleaning');
@@ -140,6 +141,9 @@ INSERT INTO visits VALUES (30, 8,11, '2023-09-20', 'Castration');
 INSERT INTO visits VALUES (31, 10,15, '2023-02-12', 'Castration');
 INSERT INTO visits VALUES (32, 11,14, '2023-09-16', 'Castration');
 INSERT INTO visits VALUES (33, 12,4, '2022-11-19', 'Castration');
+INSERT INTO visits VALUES (34, 7,4, '2022-07-25', 'Ear Infection');
+INSERT INTO visits VALUES (35, 9,4, '2022-08-28', 'Castration');
+INSERT INTO visits VALUES (36, 15,4, '2003-03-04', 'Ear Infection');
 
 INSERT INTO users(username,password,enabled) VALUES ('admin','{noop}admin', true);
 
