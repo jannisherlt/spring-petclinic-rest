@@ -1,9 +1,8 @@
-name: Master Branch workflow
+name: Docker Image CI
 
 on:
-  pull_request:
-    branches:
-      - "master"
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -28,4 +27,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-petclinic-rest:stage
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-petclinic-rest:release
