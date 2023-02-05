@@ -1,6 +1,6 @@
 # REST version of Spring PetClinic Sample Application (spring-framework-petclinic extend ) 
 
-[![Maven CI](https://github.com/jannisherlt/spring-petclinic-rest/actions/workflows/master-docker-build.yml/badge.svg)](https://github.com/jannisherlt/spring-petclinic-rest/actions/workflows/master-docker-build.yml)
+[![Develop Testing](https://github.com/jannisherlt/spring-petclinic-rest/actions/workflows/develop-maven-build.yml/badge.svg)](https://github.com/jannisherlt/spring-petclinic-rest/actions/workflows/develop-maven-build.yml)
 
 This backend version of the Spring Petclinic application only provides a REST API. **There is no UI**.
 The [spring-petclinic-angular project](https://github.com/spring-petclinic/spring-petclinic-angular) is a Angular front-end application which consumes the REST API.
