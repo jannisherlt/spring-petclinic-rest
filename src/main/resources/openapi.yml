@@ -2097,13 +2097,6 @@ components:
               minimum: 0
               example: 1
               readOnly: true
-            visits:
-              title: Visits
-              description: Vet visit bookings for this pet.
-              type: array
-              items:
-                $ref: '#/components/schemas/Visit'
-              readOnly: true
       required:
         - id
         - firstName
@@ -2114,6 +2107,12 @@ components:
       description: Editable fields of a vet visit.
       type: object
       properties:
+        visits:
+          title: Visits
+          description: Vet visit bookings for this pet.
+          type: array
+          items:
+            $ref: '#/components/schemas/Visit'
         date:
           title: Date
           description: The date of the visit.
