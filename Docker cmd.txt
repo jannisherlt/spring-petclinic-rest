@@ -1,0 +1,49 @@
+docker run -p 9966:9966 -e "SPRING_PROFILES_ACTIVE=hsqldb,spring-data-jpa,dev" --name java java 
+
+watchtower:
+docker run -d --name watchtower  -e WATCHTOWER_SCHEDULE="*/5 * * * *" -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
+
+
+build
+docker build --tag petclinic-rest .
+
+run (detached)
+docker run -d -p 9966:9966 petclinic-rest
+
+run 
+docker run -p 9966:9966 petclinic-rest
+
+stop (detached)
+docker stop _name_
+
+list containers
+docker ps -a
+
+delete container
+docker rm _name_
+
+
+docker push jannisherlt/spring-petclinic-rest:release
+
+
+Backend
+Build
+docker build --tag jannisherlt/spring-petclinic-rest:release .
+
+Run
+docker run -p 9966:9966 -e "SPRING_PROFILES_ACTIVE=hsqldb,spring-data-jpa,prod" --name spring-petclinic-rest jannisherlt/spring-petclinic-rest:release 
+
+Stop
+docker stop spring-petclinic-rest
+
+Clean up:
+docker system prune -af
+
+
+Frontend
+Build
+docker build --tag jannisherlt/spring-petclinic-angular:release .
+docker push jannisherlt/spring-petclinic-angular:release
+
+Run
+docker run -p 8080:8080 --name spring-petclinic-angular jannisherlt/spring-petclinic-angular:release
